@@ -289,20 +289,25 @@
     </section>
 
     <!-- Curved bottom text -->
-    <svg class="tagline" viewBox="0 0 1200 220" aria-hidden="true">
-      <defs>
-        <path id="curve" d="M80,150 C340,210 860,210 1120,150" />
-      </defs>
-      <text font-family="DM Serif Display, serif" font-size="72" fill="rgba(255,255,255,.85)">
-        <textPath href="#curve" startOffset="50%" text-anchor="middle">
-          song rec, movie rec, nice message, etc!
-        </textPath>
-      </text>
-      <path d="M120,160 C360,215 840,215 1080,160" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="6" stroke-linecap="round"/>
-    </svg>
-  </main>
+    <svg class="tagline" viewBox="0 0 1600 260" aria-hidden="true">
+  <defs>
+    <!-- Longer, wider curve = more room for text -->
+    <path id="curve" d="M60,170 C460,250 1140,250 1540,170" />
+  </defs>
 
-  <script>
+  <text font-family="DM Serif Display, serif" font-size="64" fill="rgba(255,255,255,.85)">
+    <textPath href="#curve" startOffset="50%" text-anchor="middle" lengthAdjust="spacingAndGlyphs" textLength="1400">
+      song rec, movie rec, nice message, etc!
+    </textPath>
+  </text>
+
+  <!-- underline-ish stroke matched to the wider arc -->
+  <path d="M90,182 C480,255 1120,255 1510,182"
+        fill="none"
+        stroke="rgba(255,255,255,.65)"
+        stroke-width="6"
+        stroke-linecap="round"/>
+</svg>
     const msg = document.getElementById("message");
     const counter = document.getElementById("counter");
     const err = document.getElementById("err");
