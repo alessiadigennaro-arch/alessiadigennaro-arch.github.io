@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A little birdie told me…</title>
 
-  <!-- Optional: nice serif-ish font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #F8EFA2;           /* soft yellow */
-      --cloud: #F6FBFF;        /* near-white */
-      --cloudShade: #EAF2F8;   /* subtle blue shade */
-      --card: #F6C85E;         /* orange-yellow card */
-      --card2: #F2B94A;        /* slightly darker for depth */
+      --bg: #F8EFA2;
+      --cloud: #F6FBFF;
+      --cloudShade: #EAF2F8;
+      --card: #F6C85E;
+      --card2: #F2B94A;
       --text: #ffffff;
       --textSoft: rgba(255,255,255,.85);
       --danger: #ff4d4d;
@@ -35,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* ===== Layout ===== */
     .scene{
       min-height: 100svh;
       position: relative;
@@ -44,7 +42,6 @@
       padding: 56px 16px 120px;
     }
 
-    /* big curved tagline at bottom */
     .tagline{
       position: absolute;
       left: 50%;
@@ -55,31 +52,25 @@
       opacity: .95;
     }
 
-    /* ===== Clouds ===== */
     .cloud{
       position: absolute;
       width: clamp(220px, 22vw, 520px);
       filter: drop-shadow(0 12px 22px rgba(0,0,0,.06));
       opacity: .95;
+      animation: floaty 6s ease-in-out infinite;
     }
     .cloud.c1{ top: 18px; left: -30px; width: clamp(260px, 28vw, 560px); }
-    .cloud.c2{ top: 34px; right: -50px; width: clamp(260px, 28vw, 620px); opacity: .9; }
+    .cloud.c2{ top: 34px; right: -50px; width: clamp(260px, 28vw, 620px); opacity: .9; animation-duration: 7.5s; }
     .cloud.c3{ top: 140px; left: 10vw; width: clamp(180px, 18vw, 420px); opacity: .85; }
     .cloud.c4{ top: 210px; right: 14vw; width: clamp(200px, 20vw, 460px); opacity: .85; }
-    .cloud.c5{ bottom: 130px; right: 4vw; width: clamp(320px, 32vw, 720px); }
-    .cloud.c6{ bottom: 70px; left: -80px; width: clamp(340px, 34vw, 760px); opacity: .9; }
+    .cloud.c5{ bottom: 130px; right: 4vw; width: clamp(320px, 32vw, 720px); animation-duration: 8.5s; }
+    .cloud.c6{ bottom: 70px; left: -80px; width: clamp(340px, 34vw, 760px); opacity: .9; animation-duration: 7s; }
 
-    /* gentle float animation */
     @keyframes floaty{
       0%,100%{ transform: translateY(0); }
       50%{ transform: translateY(-10px); }
     }
-    .cloud{ animation: floaty 6s ease-in-out infinite; }
-    .cloud.c2{ animation-duration: 7.5s; }
-    .cloud.c5{ animation-duration: 8.5s; }
-    .cloud.c6{ animation-duration: 7s; }
 
-    /* ===== Card/Form ===== */
     .card{
       width: min(520px, 92vw);
       background: linear-gradient(180deg, var(--card), var(--card2));
@@ -137,11 +128,6 @@
       background: rgba(255,255,255,.24);
     }
 
-    .row{
-      display: grid;
-      gap: 10px;
-    }
-
     .meta{
       display: flex;
       justify-content: space-between;
@@ -150,6 +136,7 @@
       margin-top: 8px;
       font-size: 12px;
       color: rgba(255,255,255,.85);
+      flex-wrap: wrap;
     }
 
     .error{
@@ -198,7 +185,6 @@
       color: rgba(255,255,255,.75);
     }
 
-    /* little “required” chip like your mockup */
     .reqChip{
       display: inline-block;
       margin-left: 6px;
@@ -211,7 +197,13 @@
       vertical-align: middle;
     }
 
-    /* responsive tweaks */
+    #status{
+      margin: 12px 0 0;
+      color: rgba(255,255,255,.95);
+      font-weight: 600;
+      min-height: 18px; /* prevents layout jump */
+    }
+
     @media (max-width: 420px){
       .card{ padding: 22px 18px 18px; }
     }
@@ -221,8 +213,7 @@
 <body>
   <main class="scene">
 
-    <!-- Clouds (inline SVG so you don’t need image files) -->
-    <!-- You can duplicate/remove clouds to match your exact Canva composition -->
+    <!-- Clouds -->
     <svg class="cloud c1" viewBox="0 0 600 220" aria-hidden="true">
       <path d="M135 170c-52 0-94-32-94-72 0-34 30-63 71-70 12-34 49-58 92-58 49 0 90 30 97 70 9-2 18-3 28-3 59 0 107 35 107 78 0 44-48 79-107 79H135Z" fill="var(--cloud)"/>
       <path d="M135 170c-52 0-94-32-94-72 0-34 30-63 71-70 12-34 49-58 92-58 49 0 90 30 97 70 9-2 18-3 28-3 59 0 107 35 107 78 0 44-48 79-107 79H135Z" fill="none" stroke="rgba(0,0,0,.06)" stroke-width="4"/>
@@ -258,10 +249,14 @@
     <!-- Center card -->
     <section class="card" role="region" aria-label="Message form">
       <h1 class="title">A little birdie told me…</h1>
-      <p class="hint">message <strong>(no longer than 15 words / 80 characters with spaces)</strong><span class="reqChip">required</span></p>
+      <p class="hint">
+        message <strong>(no longer than 15 words / 80 characters with spaces)</strong><span class="reqChip">required</span>
+      </p>
 
-      <!-- Replace FORM_ACTION_URL with your Formspree action URL -->
       <form id="birdieForm" action="https://formspree.io/f/xwvnnlyd" method="POST" novalidate>
+        <!-- (2) Email subject line -->
+        <input type="hidden" name="_subject" value="New Birdie Message 🐤">
+
         <label for="message">message</label>
         <textarea
           id="message"
@@ -284,6 +279,9 @@
 
         <button class="btn" type="submit">Submit Order</button>
 
+        <!-- (1) Status message element (required for the script) -->
+        <p id="status"></p>
+
         <div class="fineprint">
           Your Canva profile name will be shared. Never submit passwords.
         </div>
@@ -293,81 +291,80 @@
     <!-- Curved bottom text -->
     <svg class="tagline" viewBox="0 0 1200 220" aria-hidden="true">
       <defs>
-        <!-- gentle upward arc -->
         <path id="curve" d="M80,150 C340,210 860,210 1120,150" />
       </defs>
-
       <text font-family="DM Serif Display, serif" font-size="72" fill="rgba(255,255,255,.85)">
         <textPath href="#curve" startOffset="50%" text-anchor="middle">
-         song rec, movie rec, nice message, etc!
+          song rec, movie rec, nice message, etc!
         </textPath>
       </text>
-
-      <!-- underline-ish stroke -->
       <path d="M120,160 C360,215 840,215 1080,160" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="6" stroke-linecap="round"/>
     </svg>
   </main>
 
   <script>
-  const msg = document.getElementById("message");
-  const counter = document.getElementById("counter");
-  const err = document.getElementById("err");
-  const form = document.getElementById("birdieForm");
-  const statusEl = document.getElementById("status");
+    const msg = document.getElementById("message");
+    const counter = document.getElementById("counter");
+    const err = document.getElementById("err");
+    const form = document.getElementById("birdieForm");
+    const statusEl = document.getElementById("status");
 
-  function countWords(text){
-    const trimmed = text.trim();
-    if (!trimmed) return 0;
-    return trimmed.split(/\s+/).filter(Boolean).length;
-  }
-
-  function update(){
-    const chars = msg.value.length;
-    const words = countWords(msg.value);
-    counter.textContent = `${chars}/80 • ${words}/15 words`;
-
-    const ok = chars > 0 && words <= 15;
-    err.classList.toggle("show", !ok && chars > 0);
-  }
-
-  msg.addEventListener("input", update);
-  update();
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const chars = msg.value.trim().length;
-    const words = countWords(msg.value);
-
-    if (chars === 0 || words > 15){
-      err.classList.add("show");
-      msg.focus();
-      return;
+    function countWords(text){
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed.split(/\s+/).filter(Boolean).length;
     }
 
-    err.classList.remove("show");
-    statusEl.textContent = "Sending…";
+    function update(){
+      const chars = msg.value.length;
+      const words = countWords(msg.value);
+      counter.textContent = `${chars}/80 • ${words}/15 words`;
 
-    try{
-      const formData = new FormData(form);
+      // (1) Show error whenever invalid (including empty)
+      const ok = chars > 0 && words <= 15;
+      err.classList.toggle("show", !ok);
+    }
 
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: formData,
-        headers: { "Accept": "application/json" }
-      });
+    msg.addEventListener("input", update);
+    update();
 
-      if (res.ok){
-        statusEl.textContent = "Sent! 🐤";
-        form.reset();
-        update();
-      } else {
-        statusEl.textContent = "Hmm… something went wrong. Try again.";
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const chars = msg.value.trim().length;
+      const words = countWords(msg.value);
+
+      // required + word limit
+      if (chars === 0 || words > 15){
+        err.classList.add("show");
+        statusEl.textContent = "Please write a short message (≤ 15 words).";
+        msg.focus();
+        return;
       }
-    } catch (err){
-      statusEl.textContent = "Network error. Please try again.";
-    }
-  });
-</script>
+
+      err.classList.remove("show");
+      statusEl.textContent = "Sending…";
+
+      try{
+        const formData = new FormData(form);
+
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+
+        if (res.ok){
+          statusEl.textContent = "Sent! 🐤";
+          form.reset();
+          update();
+        } else {
+          statusEl.textContent = "Hmm… something went wrong. Try again.";
+        }
+      } catch (e){
+        statusEl.textContent = "Network error. Please try again.";
+      }
+    });
+  </script>
 </body>
 </html>
